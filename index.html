@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>Roof</title>
+</head>
+
+<body>
+	<link rel="stylesheet" href="style.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
+	<script src="./script.js"></script>
+	<!-- <input type="file" id="file" class="inputfile" onchange="begin()">
+  <label for="file">input file</label> -->
+
+	<div class="content">
+		<div class="input_box">
+			<input type="file" name="file-1[]" id="file" class="inputfile"
+				data-multiple-caption="{count} files selected" multiple onchange="begin()" />
+			<label for="file">
+				<img src="download.svg" alt="d" height="20px" width="20px" />
+				<span>Выберите файл&hellip;</span></label>
+		</div>
+			<table id="table" class="table_blur">
+				<!-- here goes our table -->
+			</table>
+	</div>
+	<script>
+		(function (document, window, index) {
+			'use strict';
+			var inputs = document.querySelectorAll('.inputfile');
+			Array.prototype.forEach.call(inputs, function (input) {
+				var label = input.nextElementSibling,
+					labelVal = label.innerHTML;
+
+				input.addEventListener('change', function (e) {
+					var fileName = '';
+					if (this.files && this.files.length > 1)
+						fileName = (this.getAttribute('data-multiple-caption') || '').replace('{count}',
+							this.files.length);
+					else
+						fileName = e.target.value.split('\\').pop();
+
+					if (fileName)
+						label.querySelector('span').innerHTML = fileName;
+					else
+						label.innerHTML = labelVal;
+				});
+
+				// Firefox bug fix
+				input.addEventListener('focus', function () {
+					input.classList.add('has-focus');
+				});
+				input.addEventListener('blur', function () {
+					input.classList.remove('has-focus');
+				});
+			});
+		}(document, window, 0));
+	</script>
+
+	<!-- <p id="info"></p> -->
+	<!-- <div>
+    <textarea id="workbook" rows="20" cols="90"></textarea>
+  </div> -->
+
+</body>
+
+</html>
