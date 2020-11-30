@@ -12,25 +12,36 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
 	<script src="./script.js"></script>
-	<!-- <input type="file" id="file" class="inputfile" onchange="begin()">
-  <label for="file">input file</label> -->
-
-	<div class="content">
-		<div class="input_box">
-			<input type="file" name="file-1[]" id="file" class="inputfile"
-				data-multiple-caption="{count} files selected" multiple onchange="begin()" />
+	<div class="input">
+		<div class="select-file">
+			<input type="file" name="file-1[]" id="file" class="input-file"
+				data-multiple-caption="{count} files selected" />
 			<label for="file">
-				<img src="download.svg" alt="d" height="20px" width="20px" />
-				<span>Выберите файл&hellip;</span></label>
+				<img src="download.svg" alt="svg" height="20px" width="20px" />
+				<span>Выберите файл&hellip;</span>
+			</label>
 		</div>
-			<table id="table" class="table_blur">
-				<!-- here goes our table -->
-			</table>
+		<div class="select-method">
+			<label>Вид расчета: </label>
+			<select id="method">
+				<option value="typeOfRoof">Устойчивость кровли выработки</option>
+				<option value="collapseOfRoof">Обрушаемость пород кровли пласта</option>
+			</select>
+			<label>Мощность интервала, м:</label>
+			<input type="text" id="interval" size="5" />
+			<button onclick="begin()">Расчитать</button>
+		</div>
 	</div>
+
+	<table id="table" class="table_blur">
+		<!-- here goes our table -->
+	</table>
+
+
 	<script>
 		(function (document, window, index) {
 			'use strict';
-			var inputs = document.querySelectorAll('.inputfile');
+			var inputs = document.querySelectorAll('.input-file');
 			Array.prototype.forEach.call(inputs, function (input) {
 				var label = input.nextElementSibling,
 					labelVal = label.innerHTML;
@@ -59,12 +70,6 @@
 			});
 		}(document, window, 0));
 	</script>
-
-	<!-- <p id="info"></p> -->
-	<!-- <div>
-    <textarea id="workbook" rows="20" cols="90"></textarea>
-  </div> -->
-
 </body>
 
 </html>

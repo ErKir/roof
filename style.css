@@ -34,81 +34,76 @@
     /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
-html,
+html {
+    min-width: 800px;
+    height: 100%;
+}
+
 body {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-
     font-family: Roboto;
+    background-color: #FFFFCC;
 }
 
-.content {
-    width: 100%;
-    height: 100%;
-    position: absolute;
+/*Input box*/
+
+
+.input {
     top: 0;
-    left: 0;
-    overflow: auto;
+    display: table;
+    margin-top: 2%;
+    margin-left: 15%;
+
+    font-size: 1.25em;
+    font-weight: 400;
+
+    color: black;
 }
 
-.input_box {
-    width: 250px;
-    height: 250px;
-    position: fixed;
-    top: 20%;
-    left: 55%;
-    margin: -125px 0 0 -125px;
+div {
+    display: inline-block;
 }
 
-.inputfile {
+/* Input file */
+
+.input-file {
     width: 0.1px;
     height: 0.1px;
     opacity: 0;
-    overflow: hidden;
-    position: absolute;
     z-index: -1;
 }
 
-.inputfile+label {
-    font-size: 1.25em;
-    font-weight: 400;
-    color: black;
+
+.input-file:focus+label,
+.input-file+label:hover {
     background-color: white;
-    display: inline-block;
-    margin-left: auto;
-    margin-right: auto
 }
 
-.inputfile:focus+label,
-.inputfile+label:hover {
-    background-color: rgb(140, 178, 250);
-    border-radius: 15px;
-}
-
-.inputfile+label {
+.input-file+label {
     cursor: pointer;
     /* "hand" cursor */
 }
 
-.inputfile:focus+label {
+.input-file:focus+label {
     outline: 1px dotted #000;
     outline: -webkit-focus-ring-color auto 5px;
 }
 
+:active,
+:hover,
+:focus {
+    outline: 0;
+    outline-offset: 0;
+}
 
 /* Table */
-
 
 .table_blur {
     width: 90%;
     margin: auto;
-    position: fixed;
+    margin-top: 20px;
     top: 15%;
     left: 5%;
-    background: #f5ffff;
+    background: #FFCC66;
     border-collapse: collapse;
     text-align: left;
 }
@@ -117,7 +112,7 @@ body {
     border-top: 1px solid #777777;
     border-bottom: 1px solid #777777;
     box-shadow: inset 0 1px 0 #999999, inset 0 -1px 0 #999999;
-    background: linear-gradient(#9595b6, #5a567f);
+    background: linear-gradient(#CC9933, #996600);
     color: white;
     padding: 10px 15px;
     position: relative;
@@ -135,7 +130,7 @@ body {
 }
 
 .table_blur tr:nth-child(odd) {
-    background: #ebf3f9;
+    background: #FFFFCC;
 }
 
 .table_blur th:first-child {

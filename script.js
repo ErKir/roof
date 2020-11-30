@@ -14,7 +14,7 @@ const getIndex = obj => Number(obj.index);
 const getPower = obj => Number(obj.power);
 const getNumber = obj => Number(obj.number);
 
-const computeWeakStrong = (acc, subArr, index) => {
+const computeTypeOfRoof = (acc, subArr, index) => {
   let accStrong = 0;
   let accWeak = 0;
   let resultStrong = 0;
@@ -29,7 +29,7 @@ const computeWeakStrong = (acc, subArr, index) => {
     const curr = subArr[i];
     const layer = getIndex(curr);
     const power = getPower(curr);
-    const number = getNumber(curr);
+    // const number = getNumber(curr);
     // console.log(`layer = ${layer}`);
     // console.log(`power = ${power}`);
     // console.log(`number = ${number}`);
@@ -110,7 +110,72 @@ const computeWeakStrong = (acc, subArr, index) => {
   return acc;
 };
 
-const countLayerIterator = arr => arr.reduce((computeWeakStrong), []);
+const computeCollapseOfTheRoof = (acc, subArr, index) => {
+  let resultStrong = 0;
+  let resultWeak = 0;
+  let sumPower = 0;
+  //console.log(`index = ${index}`);
+
+  for (let i = 0; i < subArr.length; i += 1) {
+    const curr = subArr[i];
+    const layer = getIndex(curr);
+    const power = getPower(curr);
+    // const number = getNumber(curr);
+    // console.log(`layer = ${layer}`);
+    // console.log(`power = ${power}`);
+    // console.log(`number = ${number}`);
+    sumPower += power;
+
+    if (strong.includes(layer)) {
+      resultStrong += power;
+      //console.log(`strong.includes(layer) accStrong= ${accStrong}`);
+    } else if (weak.includes(layer)) {
+      resultWeak += power;
+      //console.log(`weak.includes(layer) && power < 3 accWeak= ${accWeak}`);
+    }
+  };
+  const numberOfInterval = index + 1;
+  const contentOfWeak = Math.round((1 - (resultStrong / sumPower)) * 100);
+  const contentOfStrong = Math.round((resultStrong / sumPower) * 100);
+  const roofType = (index, strong, weak) => {
+    if (index === 1 || index === 2) {
+      if (strong >= 4200 && weak <= 16) {
+        return 'Т';
+      } else if ((strong >= 4000 && strong < 4200) && (weak > 16 && weak <= 20)) {
+        return 'С';
+      } else {
+        return 'Л';
+      }
+    } else if (index === 3 || index === 4) {
+      if (strong >= 2500 && weak < 50) {
+        return 'Т';
+      } else if ((strong >= 2000 && strong < 2500) && (weak > 50 && weak <= 60)) {
+        return 'С';
+      } else {
+        return 'Л';
+      }
+    } else {
+      return;
+    }
+  };
+  // console.log(`strong: ${resultStrong},
+  //   weak: ${resultWeak},
+  //   power: ${sumPower},
+  //   numberOfInterval: ${numberOfInterval}`);
+  if (numberOfInterval <= 4) {
+    acc = [...acc, {
+      Number: numberOfInterval,
+      Strong: resultStrong,
+      Weak: resultWeak,
+      Power: sumPower,
+      Content_weak: contentOfWeak,
+      Content_strong: contentOfStrong,
+      Type_roof: roofType(numberOfInterval, resultStrong, contentOfWeak)
+    }];
+  }
+  return acc;
+};
+
 
 const chunk = (arr, quantity = 2000) => {
   //console.log(`chunkArr = ${arr}`);
@@ -175,10 +240,14 @@ const tableGenerator = (jsonText) => {
         case 'Content_weak':
           translate = 'Содержание слабых, %';
           break;
+        case 'Content_strong':
+          translate = 'Содержание прочных, %';
+          break;
         case 'Type_roof':
           translate = 'Тип кровли';
           break;
-        default: 'error';
+        default:
+          'error';
       }
       let text = document.createTextNode(translate);
       console.log(`translate = ${translate}`);
@@ -206,18 +275,23 @@ const tableGenerator = (jsonText) => {
 };
 
 // Main functional
-const mainFunction = (file) => {
-  const chunkedFile = chunk(file);
+const mainFunction = (file, method, interval) => {
+  const chunkedFile = chunk(file, interval);
   //console.log(`chunkedFile = ${chunkedFile}`);
-
+  const countLayerIterator = (arr) => {
+    if (method === 'typeOfRoof') {
+      return arr.reduce((computeTypeOfRoof), []);
+    } else {
+      return arr.reduce((computeCollapseOfTheRoof), []);
+    }
+  };
   const reduced = countLayerIterator(chunkedFile);
   //console.log(`reducer = ${reduced}`);
-
   tableGenerator(reduced);
 }
 
 
-const getFile = (file) => {
+const getFile = (file, method, interval = 2000) => {
   //console.log(`file = ${file}`);
 
   const reader = new FileReader();
@@ -232,7 +306,7 @@ const getFile = (file) => {
     //jQuery('#workbook').val(json_object);
     const result = JSON.parse(json_object);
     //console.log(`json_parse = ${result}`);
-    return mainFunction(result);
+    return mainFunction(result, method, interval);
   };
 
 
@@ -244,7 +318,9 @@ const getFile = (file) => {
 };
 
 const begin = () => {
+  const method = document.getElementById("method").value;
+  const interval = parseFloat(document.getElementById("interval").value) * 1000;
   const x = document.getElementById("file");
   const file = x.files[0];
-  getFile(file);
+  getFile(file, method, interval);
 };
