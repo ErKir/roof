@@ -1,0 +1,132 @@
+/* roboto-italic - latin_cyrillic */
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+html {
+  min-width: 600px;
+  max-width: 100%;
+  height: 100%;
+}
+
+body {
+  font-family: 'Roboto', Sans-Serif;
+  background-color: #FFFFCC;
+}
+
+/*Input box*/
+
+
+.input {
+  max-width: 100%;
+  top: 0;
+  display: table;
+  margin-top: 2%;
+  margin-left: 5%;
+
+  font-size: 1.25em;
+  font-weight: 400;
+
+  color: black;
+}
+
+div {
+  display: inline-block;
+}
+
+/* Input file */
+
+.input-file {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  z-index: -1;
+}
+
+
+.input-file:focus+label,
+.input-file+label:hover {
+  background-color: white;
+}
+
+.input-file+label {
+  cursor: pointer;
+  /* "hand" cursor */
+}
+
+.input-file:focus+label {
+  outline: 1px dotted #000;
+  outline: -webkit-focus-ring-color auto 5px;
+}
+
+:active,
+:hover,
+:focus {
+  outline: 0;
+  outline-offset: 0;
+}
+
+/* Table */
+
+.table_blur {
+  width: 90%;
+  margin: auto;
+  margin-top: 20px;
+  top: 15%;
+  left: 5%;
+  background: #FFCC66;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.table_blur th {
+  border-top: 1px solid #777777;
+  border-bottom: 1px solid #777777;
+  box-shadow: inset 0 1px 0 #999999, inset 0 -1px 0 #999999;
+  background: linear-gradient(#CC9933, #996600);
+  color: white;
+  padding: 10px 15px;
+  position: relative;
+}
+
+.table_blur th:after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 25%;
+  height: 25%;
+  width: 100%;
+  background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, .08));
+}
+
+.table_blur tr:nth-child(odd) {
+  background: #FFFFCC;
+}
+
+.table_blur th:first-child {
+  border-left: 1px solid #777777;
+  border-bottom: 1px solid #777777;
+  box-shadow: inset 1px 1px 0 #999999, inset 0 -1px 0 #999999;
+}
+
+.table_blur th:last-child {
+  border-right: 1px solid #777777;
+  border-bottom: 1px solid #777777;
+  box-shadow: inset -1px 1px 0 #999999, inset 0 -1px 0 #999999;
+}
+
+.table_blur td {
+  border: 1px solid #e3eef7;
+  padding: 10px 15px;
+  position: relative;
+  transition: all 0.5s ease;
+}
+
+.table_blur tbody:hover td {
+  color: transparent;
+  text-shadow: 0 0 3px #a09f9d;
+}
+
+.table_blur tbody:hover tr:hover td {
+  color: #444444;
+  text-shadow: none;
+}
