@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+  <link rel="stylesheet" href="./style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
+  <script src="./renderer.js"></script>
+  <div class="input">
+    <div class="select-file">
+      <input type="file" name="file-1[]" id="file" class="input-file" data-multiple-caption="{count} files selected" />
+      <label for="file">
+        <img src="download.svg" alt="svg" height="20px" width="20px" />
+        <span>Выберите файл&hellip;</span>
+      </label>
+    </div>
+    <div class="select-method">
+      <label>Вид расчета: </label>
+      <select id="method">
+        <option value="typeOfRoof">Устойчивость кровли выработки</option>
+        <option value="collapseOfRoof">Обрушаемость пород кровли пласта</option>
+      </select>
+      <label>Мощность интервала, м:</label>
+      <input type="text" id="interval" size="5" value="2" />
+      <button onclick="begin()">Расчитать</button>
+      <button value="Refresh Page" onClick="window.location.reload();">Сброс</button>
+    </div>
+  </div>
+
+  <table id="table" class="table_blur">
+    <!-- here goes our table -->
+    <tr>
+      <th>Таблица должна иметь вид (названия колонок обязанны совпадать)</th>
+    </tr>
+    <tr>
+      <td><img src="exp.png" width="447" height="238" alt="table"></td>
+    </tr>
+  </table>
+
+
+  <script>
+  (function(document, window, index) {
+    'use strict';
+    var inputs = document.querySelectorAll('.input-file');
+    Array.prototype.forEach.call(inputs, function(input) {
+      var label = input.nextElementSibling,
+        labelVal = label.innerHTML;
+
+      input.addEventListener('change', function(e) {
+        var fileName = '';
+        if (this.files && this.files.length > 1)
+          fileName = (this.getAttribute('data-multiple-caption') || '').replace('{count}',
+            this.files.length);
+        else
+          fileName = e.target.value.split('\\').pop();
+
+        if (fileName)
+          label.querySelector('span').innerHTML = fileName;
+        else
+          label.innerHTML = labelVal;
+      });
+
+      // Firefox bug fix
+      input.addEventListener('focus', function() {
+        input.classList.add('has-focus');
+      });
+      input.addEventListener('blur', function() {
+        input.classList.remove('has-focus');
+      });
+    });
+  }(document, window, 0));
+
+  </script>
+</body>
+
+</html>
