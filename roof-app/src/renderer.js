@@ -141,20 +141,24 @@ const computeCollapseOfTheRoof = (acc, subArr, index) => {
   const getRoofType = (number, strongL, weakL) => {
     let roofType;
     if (number === 1 || number === 2) {
-      if (strongL >= 4200 && weakL <= 16) {
-        return 'Т';
-      } else if ((strongL >= 4000 && strongL < 4200) && (weakL > 16 && weakL <= 20)) {
-        return 'С';
-      } else {
-        return 'Л';
-      }
-    } else if (number === 3 || number === 4) {
       if (strongL >= 2500 && weakL < 50) {
         return 'Т';
       } else if ((strongL >= 2000 && strongL < 2500) && (weakL > 50 && weakL <= 60)) {
         return 'С';
-      } else {
+      } else if (strongL < 2000 && weakL > 60) {
         return 'Л';
+      } else {
+        return 'Конфликт условий';
+      }
+    } else if (number === 3 || number === 4) {
+      if (strongL >= 4200 && weakL <= 16) {
+        return 'Т';
+      } else if ((strongL >= 4000 && strongL < 4200) && (weakL > 16 && weakL <= 20)) {
+        return 'С';
+      } else if (strongL < 4000 && (weakL > 20)) {
+        return 'Л';
+      } else {
+        return 'Конфликт условий';
       }
     } else {
       return;
